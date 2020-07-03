@@ -1,1 +1,66 @@
-<p>user works!</p>
+<div class="user-list-container">
+    <div class="add-view">
+        <form [formGroup]="userForm" (ngSubmit)="addUser()">
+          <input type="number" formControlName="id" hidden/>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">First Name</label>
+                <div class="col-sm-10">  
+                <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.firstName.errors }" />
+                <div *ngIf="submitted && formControls.firstName.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.firstName.errors.required">First Name is required</div>
+                </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Last Name</label>
+                <div class="col-sm-10"> 
+                <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.lastName.errors }" />
+                <div *ngIf="submitted && formControls.lastName.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.lastName.errors.required">Last Name is required</div>
+                </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Employee Id</label>
+                <div class="col-sm-10"> 
+                <input type="text" formControlName="employeeId" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.employeeId.errors }" />
+                <div *ngIf="submitted && formControls.employeeId.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.employeeId.errors.required">Employee Id is required</div>
+                </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-secondary mr-1 btn-user-submit">{{submitButtonText}}</button>
+                <button class="btn btn-secondary" type="reset" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+    <div class="list-view">
+        <div class="form-group row list-view-searchbar"> 
+            <div class="form-group col-sm-5">
+                <input class="form-control" type="text" placeholder="Search" [(ngModel)]="userSearch">
+            </div>
+            <div class="form-group col-sm-7 sort-btn-group">
+                <label class="col-sm-2">Sort : </label>
+                <input type="button" class="btn btn-secondary" value="First Name" (click)="sortUserList('firstName')"> 
+                <input type="button" class="btn btn-secondary" value="Last Name" (click)="sortUserList('lastName')"> 
+                <input type="button" class="btn btn-secondary" value="Id" (click)="sortUserList('id')"> 
+            </div>
+        </div>
+        <div class="list-view-container" *ngFor="let user of userList | listFilter:userSearch:searchType">
+            <div class="list-view-group">
+                <ul class="list-group">
+                    <li class="list-group-item">{{user.firstName}}</li>
+                    <li class="list-group-item">{{user.lastName}}</li>
+                    <li class="list-group-item">{{user.employeeId}}</li>
+                </ul>
+                <div class="list-view-action-btns">
+
+                      <input type="button" class="btn btn-secondary" value="Edit" (click)="editUser(user)"> <br/>
+                       <input type="button" class="btn btn-secondary" value="Delete" (click)="deleteUser(user.id)">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
