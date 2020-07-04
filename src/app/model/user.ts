@@ -8,4 +8,5 @@ export interface User {
     employeeId: string;
     projectId: any;
     taskId: any;
+    project?: any;
 }

@@ -1,1 +1,138 @@
-/* You can add global styles to this file, and also import other style files */
+h2 {
+    margin:0px;
+}
+#main{
+    width: 250px;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+}
+#newspaper-b {
+    border-collapse: collapse;
+    border-color: #B7DDF2;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0;
+    text-align: left;
+    width: 100%;
+  }
+  #newspaper-b th {
+    background: none repeat scroll 0 0 #EBF4FB;
+    border-color: lightgray;
+    /* font-size: 11px; */
+    font-weight: bold;
+    padding: 15px 10px 10px;
+  }
+  #newspaper-b tbody tr td {
+    background: none repeat scroll 0 0 #FFFFFF;
+  }
+  #newspaper-b td {
+    border-top: 1px dashed #FFFFFF;
+    color: #000000;
+    padding: 10px;
+  }
+  #newspaper-b tbody tr:hover td {
+    cursor: pointer;
+    background: none repeat scroll 0 0 #FFCF8B;
+    color: #000000;
+  }
+  #newspaper-b tbody tr.selected td {
+    background: none repeat scroll 0 0 #FFCF8B;
+    color: #000000;
+  }
+  
+  
+  .search-btn {
+      width: 25%;
+      float: right;
+  }
+  
+  .search-field {
+      width: 72%;
+      float: left;
+  }
+  .sort-btn-group input[type=button]{
+    margin: 0 3px 3px 3px;
+  }
+  .slidecontainer {
+      width: 100%;
+    }
+    
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+    
+    .slider:hover {
+      opacity: 1;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #6c757d;
+      cursor: pointer;
+    }
+    
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+  
+    .progress{
+          position: absolute;left:50.5%;/*top:40%*;*/width: 80%;height:80%;opacity: 0.8; filter: alpha(opacity=80);
+      }
+      .progress-bar{
+          position:absolute;top:30%; width: 100%;height: 70%;
+    }
+    
+  .list-view {
+      margin-top: 10px;
+  }
+  .list-view-action-btns
+  input[type=button]{
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px 0 5px 0;
+  }
+  .list-view-container {
+      border-bottom: dotted darkgrey;
+      padding: 5px 0 5px 0;
+  }
+  
+  li.list-group-item {
+      background-color: #e2dfdf;
+      border: 0;
+      margin: 3px;
+  }
+  
+  .list-view-searchbar {
+      border-bottom: dotted darkgrey;
+      padding-bottom: 15px;
+      margin-bottom: 0;
+  }
+  td.project-row {
+    margin-right: 5px;
+  }
+  .add-form {
+    padding-bottom: 5px;
+    border-bottom: solid #13133c;
+  }
+  
+.btn-secondary {
+    margin: 3px;
+    max-width: 150px !important;
+}

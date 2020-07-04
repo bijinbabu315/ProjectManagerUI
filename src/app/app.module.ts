@@ -9,6 +9,7 @@ import { UserComponent } from './components/user/user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ListFilter } from './list-filter.pipe';
+import { ProjectComponent } from './components/project/project.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ListFilter } from './list-filter.pipe';
     HeaderComponent,
     FooterComponent,
     UserComponent,
-    ListFilter
+    ListFilter,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

@@ -34,7 +34,6 @@ export class UserService {
   /**
    * Deletes user
    * @param id ID
-   * @returns user
    */
   deleteUser(id: string): Observable<any>{
     const deleteUserUrl = baseUrl + UserServiceURLS.DELETE_USER;

@@ -17,7 +17,7 @@ describe('UserService', () => {
       providers: [UserService]
     });
     service = TestBed.inject(UserService);
-    httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
