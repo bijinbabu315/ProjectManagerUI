@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ListFilter } from './list-filter.pipe';
 import { ProjectComponent } from './components/project/project.component';
+import { AddTaskComponent } from './components/task/add-task/add-task/add-task.component';
+import { ViewTaskComponent } from './components/task/add-task/view-task/view-task.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ProjectComponent } from './components/project/project.component';
     FooterComponent,
     UserComponent,
     ListFilter,
-    ProjectComponent
+    ProjectComponent,
+    AddTaskComponent,
+    ViewTaskComponent
   ],
   imports: [
     BrowserModule,
