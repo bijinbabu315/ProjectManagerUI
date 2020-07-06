@@ -85,7 +85,7 @@ export class ProjectComponent implements OnInit {
         startDate: new Date(projectFormValue.startDate),
         endDate: new Date(projectFormValue.endDate),
         priority: projectFormValue.priority === null ? 0 : projectFormValue.priority,
-        user : this.user
+        user : [this.user]
       };
       this.saveOruUpdateProject(project);
     }

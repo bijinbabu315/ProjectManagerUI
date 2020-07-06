@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Project } from '../model/project';
 import { Observable } from 'rxjs';
 import { ProjectServiceURLS } from '../constants/service.constant';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,9 @@ export class ProjectService {
    */
   getAllProjects(): Observable<any>{
     const getAllProjectsUrl = this.baseUrl +  ProjectServiceURLS.GET_ALL_PROJECTS;
-    return this.http.get(getAllProjectsUrl);
+    return this.http.get(getAllProjectsUrl).pipe(
+      map((resp: any) => this.getProjectData(resp))
+    );
   }
 
   /**
@@ -44,5 +47,23 @@ export class ProjectService {
   deleteProject(id: string): Observable<any> {
     const deleteProjectUrl = this.baseUrl +  ProjectServiceURLS.DELETE_PROJECT;
     return this.http.delete(`${deleteProjectUrl}/${id}`);
+  }
+
+  getProjectData(response: any): any {
+    const projects: Project[] = [];
+    response.forEach(projectElement => {
+      const project = {
+        id: projectElement.id,
+        project: projectElement.project,
+        startDate: projectElement.startDate,
+        endDate: projectElement.endDate,
+        priority: projectElement.priority,
+        user: projectElement.user.find(userElement => userElement.isManager === 1),
+        noOfTasks: projectElement.tasks ? projectElement.tasks.length : 0,
+        noOfCompletedTask: projectElement.tasks ? projectElement.tasks.find(taskElement => taskElement.status === 1) : 0
+      };
+      projects.push(project);
+    });
+    return projects;
   }
 }
