@@ -26,15 +26,13 @@ filteredItems: any[];
                 return it.project.project.toLowerCase().includes(searchText);
             }
         }*/
-        if (searchType === 'taskProject'){
-           return (it.project.project === null ? false : it.project.project.toLowerCase().includes(searchText));
+        if (searchType === 'project'){
+           return (it.project === null ? false : it.project.toLowerCase().includes(searchText));
         }else if (searchType === 'user'){
             return (it.firstName && it.firstName.toLowerCase().includes(searchText)) ||
             (it.lastName && it.lastName.toLowerCase().includes(searchText));
-        }else{
-            return (it.firstName && it.firstName.toLowerCase().includes(searchText)) ||
-                    (it.lastName && it.lastName.toLowerCase().includes(searchText)) ||
-                    (it.project === null ? false : it.project.toLowerCase().includes(searchText))  ;
+        }else if (searchType === 'task'){
+            return (it.parentTask === null ? false : it.parentTask.toLowerCase().includes(searchText));
         }
     });
     return this.filteredItems;

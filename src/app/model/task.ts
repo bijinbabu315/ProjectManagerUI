@@ -11,7 +11,8 @@ export interface Task {
   endDate: Date;
   priority: number;
   status: any;
-  user: any;
+  user?: any;
+  userEntity?: any;
 }
 
 /**

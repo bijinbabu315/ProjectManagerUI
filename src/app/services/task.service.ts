@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Task, ParentTask } from '../model/task';
 import { TaskServiceURLS } from '../constants/service.constant';
 
-const baseUrl = environment.apiUrl + '/task';
+const baseUrl = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +21,7 @@ export class TaskService {
    * Adds update task
    * @param task Task
    */
-  addUpdateTask(task: Task): Observable<any> {
+  addOrUpdateTask(task: Task): Observable<any> {
     const addTaskUrl = baseUrl + TaskServiceURLS.SAVE_OR_UPDATE;
     return this.http.post<Task>(addTaskUrl, task);
   }
