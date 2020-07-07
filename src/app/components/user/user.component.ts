@@ -158,7 +158,7 @@ sortUserList(paramName: string): void{
       break;
     case 'id':
       this.userList = this.userList.sort((a, b) => {
-        return a.id < b.id ? -1 : 1;
+        return a.employeeId < b.employeeId ? -1 : 1;
       });
       break;
   }

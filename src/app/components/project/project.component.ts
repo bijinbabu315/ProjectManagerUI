@@ -18,6 +18,7 @@ export class ProjectComponent implements OnInit {
   searchProject: string;
   searchType = 'project' ;
   searchTypeUser = 'user';
+  previousManager: User;
 
   // Manager add popup
   userList: User[];
@@ -38,7 +39,7 @@ export class ProjectComponent implements OnInit {
       setDate: new FormControl(),
       startDate: new FormControl({ value: '', disabled: true }),
       endDate: new FormControl({ value: '', disabled: true }),
-      priority: new FormControl(),
+      priority: new FormControl(0),
       user: new FormControl({ value: '', disabled: true }, [Validators.required]),
       userId: new FormControl('', [Validators.required])
     });
@@ -53,10 +54,8 @@ export class ProjectComponent implements OnInit {
     this.projectService.getAllProjects()
       .subscribe(data => {
         this.projectList = data;
+        this.getAllUsers();
       });
-    // this.projectList.forEach(projectElement => {
-    //   projectElement.user = this.userList.find( userElement => userElement.project.id === projectElement.id);
-    // });
   }
 
   /**
@@ -65,7 +64,7 @@ export class ProjectComponent implements OnInit {
   getAllUsers(): void {
     this.userService.getAllUsers()
       .subscribe(data => {
-        this.userList = data;
+        this.userList = data.filter(dataElement => dataElement.isManager !== 1);
       });
   }
 
@@ -112,6 +111,13 @@ export class ProjectComponent implements OnInit {
     this.projectForm.get('userId').setValue(user.id);
     this.projectForm.get('user').setValue(user.firstName + ' ' + user.lastName);
     this.userSearch = user.firstName + ' ' + user.lastName;
+    if ( this.previousManager !== null && this.submitButtonText === 'Update' && this.previousManager.id !== this.user.id) {
+      this.previousManager.project = null;
+      this.previousManager.isManager = null;
+      this.userService.addOrEditUser(this.previousManager).subscribe(res => {
+        this.previousManager = null;
+      });
+    }
   }
 
   /**
@@ -145,6 +151,7 @@ export class ProjectComponent implements OnInit {
    * @param project ProjectData
    */
   editProject(project: Project): void {
+    this.previousManager = project.user;
     this.project = project;
     this.user = project.user;
     this.submitButtonText = 'Update';
@@ -172,7 +179,9 @@ export class ProjectComponent implements OnInit {
     }
     this.setDatePickerValues(false);
     this.isSubmitted = false;
+    this.projectForm.controls.priority.setValue(0);
     this.projectForm.reset();
+
   }
 
   /**

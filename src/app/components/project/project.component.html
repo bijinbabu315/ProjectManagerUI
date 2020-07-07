@@ -4,7 +4,7 @@
             <input type="number" formControlName="id" hidden/>
             <div class="form-group row">
                     <label class="control-label col-sm-2">Project</label>
-                    <div class="col-sm-10">  
+                    <div class="col-sm-10">
                         <input type="text" formControlName="project" class="form-control" [ngClass]="{ 'is-invalid': isSubmitted && formControls.project.errors }" />
                         <div *ngIf="isSubmitted && formControls.project.errors" class="invalid-feedback">
                             <div >Project is required</div>
@@ -12,10 +12,10 @@
                     </div>
               </div>
               <div class="form-row">
-                    <label class="control-label col-sm-2"></label> 
+                    <label class="control-label col-sm-2"></label>
                     <div class="form-group form-check">
                         <input type="checkbox" formControlName="setDate" id="setdate" class="form-check-input"  (change)="setDatePickerValues($event.target.checked)"/>
-                        <label for="acceptTerms" class="form-check-label">Set Start and End Date</label>    
+                        <label for="acceptTerms" class="form-check-label">Set Start and End Date</label>
                     </div>
                     <div class="form-group col-sm-3">
                         <input type="date" name="startdate" formControlName="startDate" class="form-control"  placeholder="Start Date"/>
@@ -28,8 +28,8 @@
                     <label class="control-label col-sm-2" for="formControlRange">Priority</label>
                     <div class="col-sm-10 range-clear">
                         <p class="range-left">0</p>
-                        <p class="range-right">30</p> 
-                        <input type="range" class="form-control-range slider" [min]="0" max="30" value="0" step="1" id="formControlRange" formControlName="priority">
+                        <p class="range-right">30</p>
+                        <input type="range" class="form-control-range slider" [min]="0" max="30" step="1" id="formControlRange" formControlName="priority">
                     </div>
               </div>
               <div class="form-group row">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="search-btn">
-                            <input type="button" class="btn btn-secondary" value="Search" data-toggle="modal" data-target="#userModalPopup"> 
+                            <input type="button" class="btn btn-secondary" value="Search" data-toggle="modal" data-target="#userModalPopup">
                         </div>
                     </div>
                 </div>
@@ -61,10 +61,10 @@
         </div>
         <div class="form-group row sort-btn-group">
             <label class="col-sm-2">Sort : </label>
-            <input type="button" class="btn btn-secondary" value="Start Date" (click)="sortProjectList('startDate')"> 
-            <input type="button" class="btn btn-secondary" value="End Date" (click)="sortProjectList('endDate')"> 
-            <input type="button" class="btn btn-secondary" value="Priority" (click)="sortProjectList('priority')"> 
-            <input type="button" class="btn btn-secondary" value="Completed" (click)="sortProjectList('Completed')"> 
+            <input type="button" class="btn btn-secondary" value="Start Date" (click)="sortProjectList('startDate')">
+            <input type="button" class="btn btn-secondary" value="End Date" (click)="sortProjectList('endDate')">
+            <input type="button" class="btn btn-secondary" value="Priority" (click)="sortProjectList('priority')">
+            <input type="button" class="btn btn-secondary" value="Completed" (click)="sortProjectList('Completed')">
               </div>
         <!-- </div> -->
       <div class="list-view-container" *ngFor="let project of projectList | listFilter:searchProject:searchType">
@@ -106,18 +106,18 @@
 <div class="modal" id="userModalPopup">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Add Manager</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        
+
         <!-- Modal body -->
         <div class="modal-body">
             <input class="form-control" type="text" placeholder="Search" [(ngModel)]="userSearch">
           <table id="newspaper-b">
-            <!-- <th>Select Manager</th> -->
+
             <tbody>
             <tr *ngFor="let user of userList | listFilter:userSearch:searchTypeUser" (click)="selectedUser(user)">
               <td>{{user.firstName}} {{user.lastName}}</td>
@@ -126,12 +126,12 @@
             </tbody>
           </table>
         </div>
-        
+
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
         </div>
-        
+
       </div>
     </div>
   </div>

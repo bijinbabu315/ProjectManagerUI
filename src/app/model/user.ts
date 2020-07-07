@@ -9,4 +9,5 @@ export interface User {
     projectId: any;
     taskId: any;
     project?: any;
+    isManager?: any;
 }
