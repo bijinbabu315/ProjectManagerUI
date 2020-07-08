@@ -56,10 +56,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   isParent = false;
 
   /** Search type of add task component */
-  searchType = 'task' ;
+  searchType = 'parentTask' ;
 
   /** Search project type of add task component */
-  searchProjectType = 'Project' ;
+  searchProjectType = 'project' ;
 
   /** Search user type of add task component */
   searchUserType = 'User' ;
@@ -232,11 +232,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
    * @param id Id
    */
   getTaskById(id: string): void{
-    this.taskService.getTaskById(id)
-    .subscribe(data => {
-      this.task = data;
+      this.task = JSON.parse(sessionStorage.getItem('currentTask'));
       this.setFormValues(this.task);
-    });
   }
 
   /**

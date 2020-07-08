@@ -1,1 +1,96 @@
-<p>view-task works!</p>
+<div class="main-container">
+  <div class="search-bar list-view-searchbar project-search">
+      <div class="form-group row">
+          <label class="control-label col-sm-1">Project</label>
+          <div class="col-sm-11">
+              <div class="row">
+                  <div class="col-sm-5">
+                      <div class="row">
+                          <div class="col-sm-9">
+                              <input type="text" class="form-control" placeholder="Search" [(ngModel)]="projectSearch"
+                                  disabled />
+                          </div>
+                          <div class="col-sm-2">
+                              <input type="button" class="btn btn-secondary" value="Search" data-toggle="modal" data-target="#projectModal">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-7">
+                      <div class="form-group row sort-btn-group">
+                          <label class="col-sm-2">Sort : </label>
+                          <!-- <li class="list-group-item"> -->
+                          <div class="col-sm-10">
+                              <input type="button" class="btn btn-secondary" value="Start Date"
+                                  (click)="sortTaskList('startDate')">
+                              <input type="button" class="btn btn-secondary" value="End Date"
+                                  (click)="sortTaskList('endDate')">
+                              <input type="button" class="btn btn-secondary" value="Priority"
+                                  (click)="sortTaskList('priority')">
+                              <input type="button" class="btn btn-secondary" value="Completed"
+                                  (click)="sortTaskList('Completed')">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="lits-view view-list-search">
+      <table style="width: 100%">
+          <thead>
+              <th>Task</th>
+              <th>Parent</th>
+              <th>Priority</th>
+              <th>Start</th>
+              <th>End</th>
+              <th></th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let task of taskList | listFilter:projectSearch:searchType" class="view-list-tr" >
+                  <td>{{task.task}}</td>
+                  <td>{{task.parentTask.parentTask}}</td>
+                  <td>{{task.priority}}</td>
+                  <td>{{task.startDate | date}}</td>
+                  <td>{{task.endDate | date}}</td>
+                  <td>
+                      <button class="btn btn-secondary mr-1" (click)="editTask(task)" [hidden]="task.status==1">Edit</button>
+                      <button class="btn btn-secondary" type="reset" (click)="endTask(task)" [hidden]="task.status==1">End Task</button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="projectModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Project</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <input class="form-control" type="text" placeholder="Search" [(ngModel)]="projectSearch">
+          <table id="newspaper-b">
+              <!-- <th>Select Manager</th> -->
+              <tbody>
+                  <tr *ngFor="let project of projectList | listFilter:projectSearch:searchTypeProject" (click)="selectedRow(project)">
+                      <td>{{project.project}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
