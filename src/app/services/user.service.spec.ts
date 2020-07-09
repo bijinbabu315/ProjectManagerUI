@@ -59,7 +59,7 @@ describe('UserService', () => {
       id: 1,
       firstName: 'Sibi',
       lastName: 'Babu',
-      employeeId: '658932',
+      employeeId: 658932,
       projectId: '',
       taskId: ''
     };
@@ -69,6 +69,23 @@ describe('UserService', () => {
     const req = httpMock.expectOne(baseUrl + UserServiceURLS.SAVE_OR_UPDATE);
     expect(req.request.method).toBe('POST');
     req.flush(user);
+  });
+
+  it('should call a deleteProjectInUser ', () => {
+    const project =  {
+      id: 1,
+      project: 'IIHT Project',
+      startDate: new Date(),
+      endDate: new Date(),
+      priority: 7,
+      noOfTasks: 0,
+      noOfCompletedTask: 0
+    };
+    service.deleteProjectInUser(project).subscribe(resp => {
+      expect(resp).toBeTruthy();
+    });
+    const req = httpMock.expectOne(baseUrl + UserServiceURLS.UPDATE_USER_ON_PROJECT_DELETE );
+    expect(req.request.method).toBe('POST');
   });
 
   it('should delete a user', () => {

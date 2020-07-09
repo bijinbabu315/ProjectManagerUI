@@ -19,7 +19,7 @@ describe('UserComponent', () => {
     id: 1,
     firstName: 'Jijil',
     lastName: 'Kakkadathu',
-    employeeId: '87896',
+    employeeId: 87896,
     projectId: '',
     taskId: ''
   };
@@ -29,7 +29,7 @@ describe('UserComponent', () => {
       id: 1,
       firstName: 'Jijil',
       lastName: 'Kakkadathu',
-      employeeId: '87896',
+      employeeId: 87896,
       projectId: '',
       taskId: ''
     },
@@ -37,7 +37,7 @@ describe('UserComponent', () => {
       id: 2,
       firstName: 'Achu',
       lastName: 'Kurian',
-      employeeId: '75489',
+      employeeId: 75489,
       projectId: '',
       taskId: ''
     }
@@ -56,7 +56,7 @@ describe('UserComponent', () => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    userService = TestBed.get(UserService);
+    userService = TestBed.inject(UserService);
   });
 
   it('should create', () => {
@@ -116,6 +116,6 @@ describe('UserComponent', () => {
   it('should sort the list with id', () => {
     component.userList = userList;
     component.sortUserList('id');
-    expect(component.userList[0].id).toEqual(1);
+    expect(component.userList[0].id).toEqual(2);
   });
 });
