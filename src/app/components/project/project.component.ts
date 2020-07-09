@@ -112,7 +112,7 @@ export class ProjectComponent implements OnInit {
     this.projectForm.get('user').setValue(user.firstName + ' ' + user.lastName);
     this.userSearch = user.firstName + ' ' + user.lastName;
     if ( this.previousManager !== null && this.submitButtonText === 'Update' && this.previousManager.id !== this.user.id) {
-      this.previousManager.project = null;
+      this.previousManager.projectData = null;
       this.previousManager.isManager = null;
       this.userService.addOrEditUser(this.previousManager).subscribe(res => {
         this.previousManager = null;
@@ -188,12 +188,15 @@ export class ProjectComponent implements OnInit {
    * Deletes project
    * @param id project ID
    */
-  deleteProject(id: string): void {
-    this.projectService.deleteProject(id)
+  deleteProject(project: Project): void {
+    delete project.user;
+    this.userService.deleteProjectInUser(project).subscribe(deleteData => {
+      this.projectService.deleteProject(project.id.toString())
       .subscribe(data => {
         this.getAllProjects();
         this.resetForm();
       });
+    });
   }
 
   /**

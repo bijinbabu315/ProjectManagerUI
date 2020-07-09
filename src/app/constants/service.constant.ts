@@ -9,6 +9,9 @@ export class UserServiceURLS {
 
     /** Gets delete user */
     public static get DELETE_USER(): string { return '/user/deleteUser'; }
+
+    /** Gets update user on project delete */
+    public static get UPDATE_USER_ON_PROJECT_DELETE(): string { return '/user/updateProjectInUser'; }
 }
 
 /** Project Service URLS */
@@ -33,8 +36,6 @@ export class TaskServiceURLS {
   /** Gets get all tasks */
   public static get GET_ALL_TASKS(): string { return '/task/getAllTasks'; }
 
-  /** Gets delete task */
-  public static get DELETE_TASK(): string { return '/task/deleteTask'; }
 
   /** Gets save update parent task */
   public static get SAVE_UPDATE_PARENT_TASK(): string { return '/parentTask/saveOrUpdateParentTask'; }

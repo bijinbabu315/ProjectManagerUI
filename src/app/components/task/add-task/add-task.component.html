@@ -6,7 +6,7 @@
               <div class="col-sm-10">
                   <div class="search-field">
                       <input type="text" formControlName="project" class="form-control"
-                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.projectId.errors }" />
+                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.projectId.errors }" readonly/>
                           <input type="number" formControlName="projectId" hidden/>
                       <div *ngIf="isSubmitted && formControls.projectId.errors" class="invalid-feedback">
                           <div >Project is required</div>
@@ -14,7 +14,7 @@
                   </div>
                   <div class="search-btn">
                       <input type="button" class="btn btn-secondary" value="Search" data-toggle="modal"
-                          data-target="#projectModal" >
+                          data-target="#projectModal" [disabled]="isParent">
                   </div>
               </div>
           </div>
@@ -41,7 +41,7 @@
               <div class="col-sm-10">
                   <div class="search-field">
                       <input type="text" formControlName="parentTask" class="form-control"
-                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.parentTaskId.errors }" />
+                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.parentTaskId.errors }" readonly/>
                           <input type="number" formControlName="parentTaskId" hidden/>
                       <div *ngIf="isSubmitted && formControls.parentTaskId.errors" class="invalid-feedback">
                           <div *ngIf="formControls.parentTaskId.errors.required">Parent Task is required</div>
@@ -84,7 +84,7 @@
               <div class="col-sm-10">
                   <div class="search-field">
                       <input type="text" formControlName="user" class="form-control"
-                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.userId.errors }" />
+                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.userId.errors }" readonly/>
                           <input type="number" formControlName="userId" hidden/>
                       <div *ngIf="isSubmitted && formControls.userId.errors" class="invalid-feedback">
                           <div *ngIf="formControls.userId.errors.required">User is required</div>

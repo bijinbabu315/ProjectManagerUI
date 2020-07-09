@@ -4,6 +4,7 @@ import { Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../model/user';
 import { UserServiceURLS } from '../constants/service.constant';
+import { Project } from '../model/project';
 
 const baseUrl = environment.apiUrl;
 @Injectable({
@@ -38,6 +39,16 @@ export class UserService {
   deleteUser(id: string): Observable<any>{
     const deleteUserUrl = baseUrl + UserServiceURLS.DELETE_USER;
     return this.http.delete(`${deleteUserUrl}/${id}`);
+  }
+
+  /**
+   * Deletes project in user
+   * @param project Project
+   * @returns project in user
+   */
+  deleteProjectInUser(project: Project): Observable<any>{
+    const deleteProjectInUser = baseUrl + UserServiceURLS.UPDATE_USER_ON_PROJECT_DELETE;
+    return this.http.post(deleteProjectInUser, project);
   }
 
 }

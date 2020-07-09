@@ -8,7 +8,7 @@ export interface Project {
     startDate: Date;
     endDate: Date;
     priority: number;
-    user: any;
+    user?: any;
     noOfTasks?: number;
     noOfCompletedTask?: number;
 }

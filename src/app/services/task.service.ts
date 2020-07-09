@@ -4,6 +4,7 @@ import { Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Task, ParentTask } from '../model/task';
 import { TaskServiceURLS } from '../constants/service.constant';
+import { map } from 'rxjs/operators';
 
 const baseUrl = environment.apiUrl;
 @Injectable({
@@ -32,17 +33,9 @@ export class TaskService {
    */
   getAllTasks(): Observable<any>{
     const getAllTasksUrl = baseUrl + TaskServiceURLS.GET_ALL_TASKS;
-    return this.http.get(getAllTasksUrl);
-  }
-
-  /**
-   * Gets task by id
-   * @param id id
-   * @returns task by id
-   */
-  getTaskById(id: string): Observable<Task>{
-    const getUserUrl = baseUrl + `/getTask`;
-    return this.http.get<Task>(`${getUserUrl}/${id}`);
+    return this.http.get(getAllTasksUrl).pipe(
+      map((resp: any) => this.getTaskData(resp))
+    );
   }
 
   /**
@@ -62,5 +55,27 @@ export class TaskService {
   getAllParentTasks(): Observable<any>{
     const getAllParentTasksUrl = baseUrl + TaskServiceURLS.GET_ALL_PARENT_TASKS;
     return this.http.get(getAllParentTasksUrl);
+  }
+
+  /**
+   * Gets task data
+   * @param response serviceResponse
+   * @returns task data
+   */
+  getTaskData(response: any): any {
+    const tasks: Task[] = [];
+
+    response.forEach(taskElement => {
+      if (!taskElement.parentTask){
+        taskElement.parentTask = {
+          id: '',
+          parentTask: ''
+        };
+      }
+      taskElement.project = taskElement.projectEntity;
+      taskElement.user = taskElement.userData;
+      tasks.push(taskElement);
+    });
+    return tasks;
   }
 }

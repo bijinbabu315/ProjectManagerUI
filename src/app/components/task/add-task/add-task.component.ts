@@ -136,7 +136,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       startDate: new FormControl(new Date().toISOString().substr(0, 10)),
       endDate: new FormControl(nextDay.toISOString().substr(0, 10)),
       user: new FormControl({ value: '', disabled: true }),
-      userId: new FormControl(''),
+      userId: new FormControl('', [Validators.required]),
       status: new FormControl(0)
     });
   }
@@ -160,6 +160,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       this.taskForm.get('parentTaskId').setValue('');
       this.taskForm.get('userId').setValue('');
       this.taskForm.controls.user.setValue('');
+      this.taskForm.get('userId').clearValidators();
+      this.taskForm.get('project').setValue('');
+      this.taskForm.get('projectId').setValue('');
+      this.taskForm.get('projectId').disable();
+      this.taskForm.get('projectId').clearValidators();
+      this.project = null;
       this.user = null;
     } else {
       const minStartDay = new Date().toISOString().split('T')[0];
@@ -171,7 +177,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       this.taskForm.get('projectId').enable();
       this.taskForm.get('parentTaskId').enable();
       this.taskForm.get('userId').enable();
-
+      this.taskForm.get('userId').setValidators([Validators.required]);
+      this.taskForm.get('projectId').setValidators([Validators.required]);
       document.getElementsByName('startdate')[0].setAttribute('min', minStartDay);
       document.getElementsByName('enddate')[0].setAttribute('min', minEndDay);
       this.taskForm.get('startDate').setValue(new Date().toISOString().substr(0, 10));
@@ -197,17 +204,17 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.addParentTask(parentTask);
       }else{
         delete this.project.user;
-        const task: Task = {
+        const task = {
           id: taskFormValue.id,
           task: taskFormValue.task,
-          project: this.project,
+          projectEntity: this.project,
           parent: taskFormValue.parent,
           parentTask: this.parentTask,
           priority: taskFormValue.priority,
           startDate: taskFormValue.startDate,
           endDate: taskFormValue.endDate,
-          user: this.user,
-          status: taskFormValue.status
+          userData: this.user,
+          status: 0
         };
         this.addTask(task);
       }
@@ -252,8 +259,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       parentTaskId: task.parentTask.id,
       startDate: new Date(task.startDate).toISOString().substr(0, 10),
       endDate: new Date(task.endDate).toISOString().substr(0, 10),
-      user: task.project.user ? task.project.user.firstName + ' ' + task.project.user.lastName : '',
-      userId: task.project.user ? task.project.user.id : '',
+      user: task.user ? task.user.firstName + ' ' + task.user.lastName : '',
+      userId: task.user ? task.user.id : '',
       status: task.status
     };
     this.taskForm.setValue(formValues);
@@ -267,18 +274,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
    * @param task Task
    */
   addTask(task: Task): void {
+
     this.taskService.addOrUpdateTask(task)
     .subscribe(res => {
-      const user =  JSON.parse(JSON.stringify(task.user));
-      const projectInfo = JSON.parse(JSON.stringify(task.project));
-      const taskCopy = JSON.parse(JSON.stringify(task));
-      taskCopy.id = res;
-      delete taskCopy.project;
-      delete taskCopy.user;
-      user.projectData = projectInfo;
-      user.task = taskCopy;
-      this.userService.addOrEditUser(user) .subscribe(result => { });
-      this.resetForm();
+       this.resetForm();
     });
   }
 
@@ -356,7 +355,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   getAllUsers(): void {
     this.userService.getAllUsers()
       .subscribe(data => {
-        this.userList = data.filter(dataElement =>  (dataElement.project === null || dataElement.isManager !== 1 ||
+        this.userList = data.filter(dataElement =>  (dataElement.projectData === null || dataElement.isManager !== 1 ||
         (this.project && dataElement.isManager === 1 && dataElement.projectData.id === this.project.id)));
       });
   }

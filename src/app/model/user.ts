@@ -5,10 +5,10 @@ export interface User {
     id: number;
     firstName: string;
     lastName: string;
-    employeeId: string;
+    employeeId: number;
     projectId: any;
     taskId: any;
-    project?: any;
+    projectData?: any;
     isManager?: any;
-    task?: any;
+    taskData?: any;
 }

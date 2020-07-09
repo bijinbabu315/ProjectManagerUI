@@ -4,15 +4,16 @@
 export interface Task {
   id: number;
   task: string;
-  parent: boolean;
+  parent?: boolean;
   parentTask: any;
-  project: any;
+  project?: any;
+  projectEntity?: any;
   startDate: Date;
   endDate: Date;
   priority: number;
   status: any;
   user?: any;
-  userEntity?: any;
+  userData?: any;
 }
 
 /**
