@@ -155,7 +155,6 @@ export class ProjectComponent implements OnInit {
     this.project = project;
     this.user = project.user;
     this.submitButtonText = 'Update';
-    // console.log(project);
     const editProject = {
       id: this.project.id,
       project: this.project.project,
