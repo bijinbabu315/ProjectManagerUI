@@ -15,6 +15,7 @@ export class ProjectComponent implements OnInit {
   projectList: Project[];
   isSubmitted = false;
   submitButtonText = 'Add' ;
+  resetButtonText = 'Reset';
   searchProject: string;
   searchType = 'project' ;
   searchTypeUser = 'user';
@@ -155,6 +156,7 @@ export class ProjectComponent implements OnInit {
     this.project = project;
     this.user = project.user;
     this.submitButtonText = 'Update';
+    this.resetButtonText = 'Cancel';
     const editProject = {
       id: this.project.id,
       project: this.project.project,
@@ -175,6 +177,7 @@ export class ProjectComponent implements OnInit {
   resetForm(): void {
     if (this.submitButtonText === 'Update') {
       this.submitButtonText = 'Add';
+      this.resetButtonText = 'Reset';
     }
     this.setDatePickerValues(false);
     this.isSubmitted = false;

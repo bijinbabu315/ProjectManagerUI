@@ -52,6 +52,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   /** Submit button text of add task component */
   submitButtonText = 'Add';
 
+  /** Reset button text of add task component */
+  resetButtonText = 'Reset';
+
   /** Determines whether parent is */
   isParent = false;
 
@@ -101,6 +104,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     if (this.id){
       this.getTaskById(this.id);
       this.submitButtonText = 'Update';
+      this.resetButtonText = 'Cancel';
     }
   }
 
@@ -287,6 +291,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   resetForm(): void {
     this.taskForm.reset();
     this.submitButtonText = 'Add';
+    this.resetButtonText = 'Reset';
     this.isParent = false;
     this.isParentTask(false);
     this.isSubmitted = false;
