@@ -41,14 +41,5 @@ export class UserService {
     return this.http.delete(`${deleteUserUrl}/${id}`);
   }
 
-  /**
-   * Deletes project in user
-   * @param project Project
-   * @returns project in user
-   */
-  deleteProjectInUser(project: Project): Observable<any>{
-    const deleteProjectInUser = baseUrl + UserServiceURLS.UPDATE_USER_ON_PROJECT_DELETE;
-    return this.http.post(deleteProjectInUser, project);
-  }
 
 }

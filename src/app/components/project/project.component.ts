@@ -23,6 +23,7 @@ export class ProjectComponent implements OnInit {
 
   // Manager add popup
   userList: User[];
+  userListFromService: User[];
   userSearch: string;
   user: User;
   project: Project;
@@ -65,6 +66,7 @@ export class ProjectComponent implements OnInit {
   getAllUsers(): void {
     this.userService.getAllUsers()
       .subscribe(data => {
+        this.userListFromService = data;
         this.userList = data.filter(dataElement => dataElement.isManager !== 1);
       });
   }
@@ -85,7 +87,7 @@ export class ProjectComponent implements OnInit {
         startDate: new Date(projectFormValue.startDate),
         endDate: new Date(projectFormValue.endDate),
         priority: projectFormValue.priority === null ? 0 : projectFormValue.priority,
-        user : [this.user]
+        userId : this.user.id
       };
       this.saveOruUpdateProject(project);
     }
@@ -113,7 +115,7 @@ export class ProjectComponent implements OnInit {
     this.projectForm.get('user').setValue(user.firstName + ' ' + user.lastName);
     this.userSearch = user.firstName + ' ' + user.lastName;
     if ( this.previousManager !== null && this.submitButtonText === 'Update' && this.previousManager.id !== this.user.id) {
-      this.previousManager.projectData = null;
+      this.previousManager.projectId = null;
       this.previousManager.isManager = null;
       this.userService.addOrEditUser(this.previousManager).subscribe(res => {
         this.previousManager = null;
@@ -152,9 +154,10 @@ export class ProjectComponent implements OnInit {
    * @param project ProjectData
    */
   editProject(project: Project): void {
-    this.previousManager = project.user;
+    this.previousManager = this.userListFromService.find(userElement => userElement.projectId = project.id && userElement.isManager === 1);
     this.project = project;
-    this.user = project.user;
+    this.user =  this.previousManager ;
+    this.project.user = this.user;
     this.submitButtonText = 'Update';
     this.resetButtonText = 'Cancel';
     const editProject = {
@@ -192,13 +195,11 @@ export class ProjectComponent implements OnInit {
    */
   deleteProject(project: Project): void {
     delete project.user;
-    this.userService.deleteProjectInUser(project).subscribe(deleteData => {
-      this.projectService.deleteProject(project.id.toString())
+    this.projectService.deleteProject(project.id.toString())
       .subscribe(data => {
         this.getAllProjects();
         this.resetForm();
       });
-    });
   }
 
   /**

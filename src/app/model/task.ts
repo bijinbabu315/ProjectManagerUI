@@ -13,7 +13,6 @@ export interface Task {
   priority: number;
   status: any;
   user?: any;
-  userData?: any;
 }
 
 /**

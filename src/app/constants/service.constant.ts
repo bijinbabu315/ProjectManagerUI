@@ -2,45 +2,45 @@
 export class UserServiceURLS {
 
     /** Gets save or update */
-    public static get SAVE_OR_UPDATE(): string { return '/user/saveOrUpdateUser'; }
+    public static get SAVE_OR_UPDATE(): string { return '/pm-user/user/saveOrUpdateUser'; }
 
     /** Gets get all user */
-    public static get GET_ALL_USERS(): string { return '/user/getAllUsers'; }
+    public static get GET_ALL_USERS(): string { return '/pm-user/user/getAllUsers'; }
 
     /** Gets delete user */
-    public static get DELETE_USER(): string { return '/user/deleteUser'; }
+    public static get DELETE_USER(): string { return '/pm-user/user/deleteUser'; }
 
     /** Gets update user on project delete */
-    public static get UPDATE_USER_ON_PROJECT_DELETE(): string { return '/user/updateProjectInUser'; }
+    public static get UPDATE_USER_ON_PROJECT_DELETE(): string { return '/pm-user/user/updateProjectInUser'; }
 }
 
 /** Project Service URLS */
 export class ProjectServiceURLS {
 
     /** Gets save or update */
-    public static get SAVE_OR_UPDATE(): string { return '/project/saveOrUpdateProject'; }
+    public static get SAVE_OR_UPDATE(): string { return '/pm-project/project/saveOrUpdateProject'; }
 
     /** Gets get all projects */
-    public static get GET_ALL_PROJECTS(): string { return '/project/getAllProjects'; }
+    public static get GET_ALL_PROJECTS(): string { return '/pm-project/project/getAllProjects'; }
 
     /** Gets delete project */
-    public static get DELETE_PROJECT(): string { return '/project/deleteProject'; }
+    public static get DELETE_PROJECT(): string { return '/pm-project/project/deleteProject'; }
 }
 
 /** Task service urls */
 export class TaskServiceURLS {
 
   /** Gets save or update */
-  public static get SAVE_OR_UPDATE(): string { return '/task/saveOrUpdateTask'; }
+  public static get SAVE_OR_UPDATE(): string { return '/pm-project/task/saveOrUpdateTask'; }
 
   /** Gets get all tasks */
-  public static get GET_ALL_TASKS(): string { return '/task/getAllTasks'; }
+  public static get GET_ALL_TASKS(): string { return '/pm-project/task/getAllTasks'; }
 
 
   /** Gets save update parent task */
-  public static get SAVE_UPDATE_PARENT_TASK(): string { return '/parentTask/saveOrUpdateParentTask'; }
+  public static get SAVE_UPDATE_PARENT_TASK(): string { return '/pm-project/parentTask/saveOrUpdateParentTask'; }
 
   /** Gets get all parent tasks */
-  public static get GET_ALL_PARENT_TASKS(): string { return '/parentTask/getAllParentTasks'; }
+  public static get GET_ALL_PARENT_TASKS(): string { return '/pm-project/parentTask/getAllParentTasks'; }
 
 }

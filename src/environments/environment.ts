@@ -1,6 +1,6 @@
 
 export const environment = {
   production: false,
-  apiUrl:    'http://localhost:8090/pm-user'
+  apiUrl:    'http://localhost:8090'
 };
 

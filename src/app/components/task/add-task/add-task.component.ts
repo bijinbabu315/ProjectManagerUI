@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators  } from '@angular/forms';
-import { ActivatedRoute, Event as NavigationEvent } from '@angular/router';
+import { ActivatedRoute, Event as NavigationEvent, Router } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { UserService } from '../../../services/user.service';
 import { TaskService } from '../../../services/task.service';
@@ -49,6 +49,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   /** User list of add task component */
   userList: User[] = [];
 
+  /** User list of add task component */
+  userListFromService: User[] = [];
+
   /** Submit button text of add task component */
   submitButtonText = 'Add';
 
@@ -68,8 +71,17 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   searchUserType = 'User' ;
 
   /** Id  of add task component */
-  id = '' ;
+  id = 0 ;
 
+  /**
+   * Determines whether filled task form is
+   */
+  isFilledTaskForm = false;
+
+  /**
+   * Previous user of add task component
+   */
+  previousUser: User;
 
   /**
    * Creates an instance of add task component.
@@ -83,29 +95,29 @@ export class AddTaskComponent implements OnInit, OnDestroy {
               private projectService: ProjectService,
               private userService: UserService,
               private taskService: TaskService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   /**
    * on init
    */
   ngOnInit(): void {
-    this.createTaskForm();
-    this.getAllProjects();
-    this.getAllParentTasks();
-    this.getAllUsers();
 
     this.subscription = this.route
       .queryParams
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
-        this.id = params['taskId'] || null;
+        this.id = params[`taskId`] ? parseInt(params[`taskId`], 10) : null;
       });
 
-    if (this.id){
-      this.getTaskById(this.id);
+    if (this.id) {
       this.submitButtonText = 'Update';
       this.resetButtonText = 'Cancel';
     }
+    this.createTaskForm();
+    this.getAllProjects();
+    this.getAllParentTasks();
+    this.getAllUsers();
   }
 
   /**
@@ -217,7 +229,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
           priority: taskFormValue.priority,
           startDate: taskFormValue.startDate,
           endDate: taskFormValue.endDate,
-          userData: this.user,
+          userId: this.user.id,
           status: 0
         };
         this.addTask(task);
@@ -242,8 +254,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
    * Gets task by id
    * @param id Id
    */
-  getTaskById(id: string): void{
+  getTaskById(id: number): void{
       this.task = JSON.parse(sessionStorage.getItem('currentTask'));
+      this.task.user = this.userListFromService.find(userElement => userElement.taskId === id);
+      this.previousUser = this.task.user;
       this.setFormValues(this.task);
   }
 
@@ -269,6 +283,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     };
     this.taskForm.setValue(formValues);
     this.project = task.project;
+    this.updateUserList();
     this.user = task.project.user;
     this.parentTask = task.parentTask;
   }
@@ -282,6 +297,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.taskService.addOrUpdateTask(task)
     .subscribe(res => {
        this.resetForm();
+       this.router.navigate(['addTask']);
     });
   }
 
@@ -295,6 +311,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     this.isParent = false;
     this.isParentTask(false);
     this.isSubmitted = false;
+    this.isFilledTaskForm = false;
   }
 
   /**
@@ -326,6 +343,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       break;
     case 'user':
       this.user = selectedObj;
+      if ( this.previousUser != null &&  this.submitButtonText === 'Update' && this.previousUser.id !== this.user.id) {
+        this.previousUser.taskId = null;
+        this.userService.addOrEditUser(this.previousUser).subscribe(res => {
+          this.previousUser = null;
+        });
+      }
+
       this.taskForm.get('userId').setValue(selectedObj.id);
       this.taskForm.get('user').setValue(selectedObj.firstName + ' ' + selectedObj.lastName);
       this.selectSearch = selectedObj.firstName + ' ' + selectedObj.lastName;
@@ -360,9 +384,20 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   getAllUsers(): void {
     this.userService.getAllUsers()
       .subscribe(data => {
-        this.userList = data.filter(dataElement =>  (dataElement.projectData === null || dataElement.isManager !== 1 ||
-        (this.project && dataElement.isManager === 1 && dataElement.projectData.id === this.project.id)));
+        this.userListFromService = data;
+        this.updateUserList();
+        if (this.submitButtonText === 'Update' && !this.isFilledTaskForm) {
+          this.getTaskById(this.id);
+          this.isFilledTaskForm = true;
+        }
       });
   }
 
+  /**
+   * Updates user list
+   */
+  updateUserList(): void {
+    this.userList = this.userListFromService.filter(dataElement =>  (dataElement.projectId === null || dataElement.isManager !== 1 ||
+      (this.project && dataElement.isManager === 1 && dataElement.projectId === this.project.id)));
+  }
 }

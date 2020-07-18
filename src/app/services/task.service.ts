@@ -73,7 +73,6 @@ export class TaskService {
         };
       }
       taskElement.project = taskElement.projectEntity;
-      taskElement.user = taskElement.userData;
       tasks.push(taskElement);
     });
     return tasks;

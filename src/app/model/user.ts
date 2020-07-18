@@ -6,9 +6,7 @@ export interface User {
     firstName: string;
     lastName: string;
     employeeId: number;
-    projectId: any;
-    taskId: any;
-    projectData?: any;
+    projectId: number;
+    taskId: number;
     isManager?: any;
-    taskData?: any;
 }

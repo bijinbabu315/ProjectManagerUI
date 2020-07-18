@@ -9,6 +9,7 @@ export interface Project {
     endDate: Date;
     priority: number;
     user?: any;
+    userId?: any;
     noOfTasks?: number;
     noOfCompletedTask?: number;
 }

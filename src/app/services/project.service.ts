@@ -58,7 +58,6 @@ export class ProjectService {
         startDate: projectElement.startDate,
         endDate: projectElement.endDate,
         priority: projectElement.priority,
-        user: projectElement.user.find(userElement => userElement.isManager === 1),
         noOfTasks: projectElement.tasks ? projectElement.tasks.length : 0,
         noOfCompletedTask: projectElement.tasks ? projectElement.tasks.find(taskElement => taskElement.status === 1) : 0
       };
