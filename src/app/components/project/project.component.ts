@@ -154,7 +154,8 @@ export class ProjectComponent implements OnInit {
    * @param project ProjectData
    */
   editProject(project: Project): void {
-    this.previousManager = this.userListFromService.find(userElement => userElement.projectId = project.id && userElement.isManager === 1);
+    this.previousManager = this.userListFromService.find(userElement => userElement.projectId === project.id
+       && userElement.isManager === 1);
     this.project = project;
     this.user =  this.previousManager ;
     this.project.user = this.user;
