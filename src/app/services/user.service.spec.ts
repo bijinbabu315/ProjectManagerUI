@@ -60,8 +60,8 @@ describe('UserService', () => {
       firstName: 'Sibi',
       lastName: 'Babu',
       employeeId: 658932,
-      projectId: '',
-      taskId: ''
+      projectId: null,
+      taskId: null
     };
     service.addOrEditUser(user).subscribe(userInfo => {
       expect(userInfo).toBe(user);

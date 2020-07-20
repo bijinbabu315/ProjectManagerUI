@@ -9,9 +9,6 @@ export class UserServiceURLS {
 
     /** Gets delete user */
     public static get DELETE_USER(): string { return '/pm-user/user/deleteUser'; }
-
-    /** Gets update user on project delete */
-    public static get UPDATE_USER_ON_PROJECT_DELETE(): string { return '/pm-user/user/updateProjectInUser'; }
 }
 
 /** Project Service URLS */

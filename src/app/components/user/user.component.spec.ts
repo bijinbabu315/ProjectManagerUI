@@ -20,8 +20,8 @@ describe('UserComponent', () => {
     firstName: 'Jijil',
     lastName: 'Kakkadathu',
     employeeId: 87896,
-    projectId: '',
-    taskId: ''
+    projectId: null,
+    taskId: null
   };
 
   const userList = [
@@ -30,16 +30,16 @@ describe('UserComponent', () => {
       firstName: 'Jijil',
       lastName: 'Kakkadathu',
       employeeId: 87896,
-      projectId: '',
-      taskId: ''
+      projectId: null,
+      taskId: null
     },
     {
       id: 2,
       firstName: 'Achu',
       lastName: 'Kurian',
       employeeId: 75489,
-      projectId: '',
-      taskId: ''
+      projectId: null,
+      taskId: null
     }
   ];
   beforeEach(async(() => {

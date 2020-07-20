@@ -180,7 +180,7 @@ describe('AddTaskComponent', () => {
     const mockTaskList = taskService.getTaskData(taskList)[0];
     const task = mockTaskList[0];
     spyOn(component, 'getTaskById');
-    component.getTaskById('1');
+    component.getTaskById(1);
     component.task = task;
     expect(component.task).toBeUndefined();
   });

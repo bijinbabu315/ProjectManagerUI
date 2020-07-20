@@ -89,42 +89,27 @@ describe('ProjectComponent', () => {
       firstName: 'Anu',
       lastName: 'John',
       employeeId: 68253,
-      projectData: {
-        id: 2,
-        project: 'Test project',
-        startDate: '2020-07-16T00:00:00.000+00:00',
-        endDate: '2020-07-24T00:00:00.000+00:00',
-        priority: 8
-      },
-      isManager: 1
+      projectId: 2,
+      isManager: 1,
+      taskId: null
     },
     {
       id: 2,
       firstName: 'Diya',
       lastName: 'Sobin',
       employeeId: 15892,
-      projectData: {
-        id: 1,
-        project: 'Project Data',
-        startDate: '2020-07-09T00:00:00.000+00:00',
-        endDate: '2020-07-10T00:00:00.000+00:00',
-        priority: 2
-      },
-      isManager: 1
+      projectId: 1,
+      isManager: 1,
+      taskId: null
     },
     {
       id: 1,
       firstName: 'Biji',
       lastName: 'Babu',
       employeeId: 608877,
-      projectData: {
-        id: 1,
-        project: 'Project Data',
-        startDate: '2020-07-09T00:00:00.000+00:00',
-        endDate: '2020-07-10T00:00:00.000+00:00',
-        priority: 2
-      },
-      isManager: null
+      projectId: 2,
+      isManager: null,
+      taskId: null
     }
   ];
 
@@ -161,8 +146,9 @@ describe('ProjectComponent', () => {
     expect(component.projectForm.valid).toBeFalse();
   });
 
-  it('should call add user method', () => {
+  it('should call add project method', () => {
     component.projectForm = formBuilder.group(mockProjectList[0]);
+    component.user = mockUserList[0];
     component.addProject();
     expect(component.isSubmitted).not.toBeFalsy();
   });
@@ -180,6 +166,8 @@ describe('ProjectComponent', () => {
 
 
   it('edit project', () => {
+    component.userListFromService = mockUserList;
+    component.user = mockUserList[0];
     component.editProject(projectData);
     expect(component.submitButtonText).toEqual('Update');
   });
@@ -197,13 +185,6 @@ describe('ProjectComponent', () => {
       firstName: 'Diya',
       lastName: 'Sobin',
       employeeId: 15892,
-      projectData: {
-        id: 1,
-        project: 'Project Data',
-        startDate: '2020-07-09T00:00:00.000+00:00',
-        endDate: '2020-07-10T00:00:00.000+00:00',
-        priority: 2
-      },
       isManager: 1,
       taskId: 1,
       projectId: 1
@@ -214,12 +195,6 @@ describe('ProjectComponent', () => {
     expect(component.userSearch).toEqual('Anu John');
   });
 
-  it('call delete project', () => {
-    spyOn(projectService, 'deleteProject').and.returnValue(of(newProject));
-    spyOn(userService, 'deleteProjectInUser').and.returnValue(of(newProject));
-    component.deleteProject(newProject);
-    expect(projectService.deleteProject).toHaveBeenCalled();
-  });
 
   it('list project managers', () => {
     spyOn(userService, 'getAllUsers').and.returnValue(of(mockUserList));
